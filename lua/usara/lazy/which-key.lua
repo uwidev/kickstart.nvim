@@ -1,25 +1,26 @@
 return { -- Useful plugin to show you pending keybinds.
 	'folke/which-key.nvim',
+	priority = 999, -- load before plugins so they can add keys as well
 	event = 'VimEnter', -- Sets the loading event to 'VimEnter'
 	config = function() -- This is the function that runs, AFTER loading
 		require('which-key').setup()
 
 		-- Document existing key chains
-		require('which-key').register {
-			['<leader>c'] = { name = '[c]ode', _ = 'which_key_ignore' },
-			['<leader>d'] = { name = '[d]ocument', _ = 'which_key_ignore' },
-			['<leader>r'] = { name = '[r]ename', _ = 'which_key_ignore' },
-			['<leader>s'] = { name = '[s]earch', _ = 'which_key_ignore' },
-			['<leader>w'] = { name = '[w]orkspace', _ = 'which_key_ignore' },
-			['<leader>t'] = { name = '[t]oggle', _ = 'which_key_ignore' },
-			['<leader>h'] = { name = 'Git [h]unk', _ = 'which_key_ignore' },
-			['<leader>q'] = { name = '[q]uick command execute', _ = 'which_key_ignore' },
+		require('which-key').add {
+			{ '<leader>c', group = '[c]ode' },
+			{ '<leader>d', group = '[d]ocument' },
+			-- { '<leader>r', group = '[r]ename' },
+			{ '<leader>s', group = '[s]earch' },
+			{ '<leader>w', group = '[w]orkspace' },
+			{ '<leader>t', group = '[t]oggle' },
+			{ '<leader>h', group = 'Git [h]unk' },
+			{ '<leader>q', group = '[q]uit to yazi' },
 		}
 		-- visual mode
-		require('which-key').register({
-			['<leader>h'] = { 'Git [h]unk' },
-			['<leader>m'] = { '[m]ove visual' },
-			['<leader>g'] = { '[g]it' },
+		require('which-key').add({
+			{ '<leader>h', group = 'Git [h]unk' },
+			{ '<leader>m', group = '[m]ove visual' },
+			{ '<leader>g', group = '[g]it' },
 		}, { mode = 'v' })
 	end,
 }

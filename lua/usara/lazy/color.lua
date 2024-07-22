@@ -15,7 +15,6 @@ return {
 		init = function()
 			require('lushwal').compile()
 			vim.cmd.colorscheme 'lushwal'
-			-- vim.cmd 'hi clear Zee'
 		end,
 		config = function()
 			vim.g.lushwal_configuration = {
@@ -27,6 +26,7 @@ return {
 					telescope_nvim = true,
 					vim_gitgutter = true,
 					virt_column = true,
+					dev = true,
 				},
 			}
 		end,

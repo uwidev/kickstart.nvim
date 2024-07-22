@@ -39,12 +39,17 @@ return { -- LSP Configuration & Plugins
 				--  To jump back, press <C-t>.
 				map('gd', require('telescope.builtin').lsp_definitions, '[g]oto [d]efinition')
 
+				-- Same as above, but open to vertical split
+				-- map('gd', function()
+				-- 	require('telescope.builtin').lsp_definitions { jump_type = 'vsplit' }
+				-- end, '[g]oto [d]efinition')
+
 				-- Find references for the word under your cursor.
 				map('gr', require('telescope.builtin').lsp_references, '[g]oto [r]eferences')
 
 				-- Jump to the implementation of the word under your cursor.
 				--  Useful when your language has ways of declaring types without an actual implementation.
-				map('gI', require('telescope.builtin').lsp_implementations, '[g]oto [i]mplementation')
+				map('gi', require('telescope.builtin').lsp_implementations, '[g]oto [i]mplementation')
 
 				-- Jump to the type of the word under your cursor.
 				--  Useful when you're not sure what type a variable is and you want to see
@@ -61,7 +66,7 @@ return { -- LSP Configuration & Plugins
 
 				-- Rename the variable under your cursor.
 				--  Most Language Servers support renaming across files, etc.
-				map('<leader>rn', vim.lsp.buf.rename, '[r]e[N]ame')
+				map('<leader>rn', vim.lsp.buf.rename, '[r]e[n]ame')
 
 				-- Execute a code action, usually your cursor needs to be on top of an error
 				-- or a suggestion from your LSP for this to activate.
@@ -146,11 +151,60 @@ return { -- LSP Configuration & Plugins
 				},
 
 				-- python
-				ruff_lsp = {},
-				pyright = {
+				ruff_lsp = {
 					autostart = false,
+					opts = {
+						cmd_env = { RUFF_TRACE = 'messages' },
+					},
+				},
+				ruff = {
+					-- autostart = false,
+					settings = {
+						-- args = { '--config=./pyproject.toml' },
+					},
 				},
 				jedi_language_server = {
+					autostart = false,
+					-- init_options = {
+					-- 	init_options = {
+					-- 		completion = {
+					-- 			disableSnippets = true,
+					-- 		},
+					-- 		diagnostics = {
+					-- 			enable = true,
+					-- 		},
+					-- 		workspace = {
+					-- 			symbols = {
+					-- 				ignoreFolders = {
+					-- 					{ '.nox', '.tox', '__pycache__' },
+					-- 				},
+					-- 			},
+					-- 		},
+					-- 	},
+					-- },
+				},
+				pylsp = {
+					-- autostart = false,
+					settings = {
+						pylsp = {
+							plugins = {
+								pycodestyle = {
+									enabled = false,
+								},
+								autopep8 = {
+									enabled = false,
+								},
+								yapf = {
+									enabled = false,
+								},
+								pyflakes = {
+									enabled = false,
+								},
+							},
+						},
+					},
+				},
+				pyright = {
 					autostart = false,
 				},
 
@@ -256,10 +310,9 @@ return { -- LSP Configuration & Plugins
 					require('lspconfig')[server_name].setup(server)
 				end,
 			},
-
-			vim.lsp.set_log_level 'debug',
 		}
-
+		-- vim.lsp.set_log_level 'debug',
+		-- require('lspconfig').anakin_language_server.setup {}
 		-- require('lspconfig').textlsp.setup {
 		--   settings = {
 		--     textLSP = {

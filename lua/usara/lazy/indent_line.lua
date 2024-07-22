@@ -7,9 +7,16 @@ return {
 		opts = {
 			enabled = true,
 			indent = {
-				char = '│',
-				tab_char = { '┝' },
-				highlight = { 'Function', 'Label' },
+				char = '├',
+				tab_char = { '│' },
+				highlight = {
+					'DevColor1',
+					'DevColor2',
+					'DevColor3',
+					'DevColor4',
+					'DevColor5',
+					'DevColor6',
+				},
 				repeat_linebreak = false,
 			},
 		},
