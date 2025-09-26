@@ -1,6 +1,6 @@
 return { -- neorg support, better notes
 	'nvim-neorg/neorg',
-	dependencies = { 'luarocks.nvim' },
+	dependencies = { 'luarocks.nvim', 'benlubas/neorg-interim-ls', 'benlubas/neorg-conceal-wrap' },
 	lazy = false,
 	version = '*',
 	config = function()
@@ -10,15 +10,34 @@ return { -- neorg support, better notes
 				['core.concealer'] = {
 					config = {
 						icons = {
+							heading = {
+								icons = {
+									'󰉫',
+									'󰉬',
+									'󰉭',
+									'󰉮',
+									'󰉯',
+									'󰉰',
+								},
+							},
 							todo = {
 								undone = {
 									icon = ' ',
 								},
-								done = {
-									icon = 'x',
-								},
 								pending = {
-									icon = '-',
+									icon = '',
+								},
+								recurring = {
+									icon = '',
+								},
+								cancelled = {
+									icon = '',
+								},
+								on_hold = {
+									icon = '󰏤',
+								},
+								urgent = {
+									icon = '',
 								},
 							},
 						},
@@ -36,7 +55,9 @@ return { -- neorg support, better notes
 				['core.dirman'] = {
 					config = {
 						workspaces = {
-							notes = '~/notes',
+							notes = '~/docs/notes/',
+							ramble = '~/docs/notes/ramble',
+							journal = '~/docs/notes/journal',
 						},
 					},
 				},
@@ -47,9 +68,10 @@ return { -- neorg support, better notes
 					},
 				},
 				['core.completion'] = {
-					config = {
-						engine = 'nvim-cmp',
-					},
+					config = { engine = { module_name = 'external.lsp-completion' } },
+					-- config = {
+					-- 	engine = 'nvim-cmp',
+					-- },
 				},
 				['core.integrations.nvim-cmp'] = {},
 				['core.keybinds'] = {
@@ -65,6 +87,35 @@ return { -- neorg support, better notes
 						end,
 					},
 				},
+				['external.interim-ls'] = {
+					config = {
+						-- default config shown
+						completion_provider = {
+							-- Enable or disable the completion provider
+							enable = true,
+
+							-- Show file contents as documentation when you complete a file name
+							documentation = true,
+
+							-- Try to complete categories provided by Neorg Query. Requires `benlubas/neorg-query`
+							categories = false,
+
+							-- suggest heading completions from the given file for `{@x|}` where `|` is your cursor
+							-- and `x` is an alphanumeric character. `{@name}` expands to `[name]{:$/people:# name}`
+							people = {
+								enable = false,
+
+								-- path to the file you're like to use with the `{@x` syntax, relative to the
+								-- workspace root, without the `.norg` at the end.
+								-- ie. `folder/people` results in searching `$/folder/people.norg` for headings.
+								-- Note that this will change with your workspace, so it fails silently if the file
+								-- doesn't exist
+								path = 'people',
+							},
+						},
+					},
+				},
+				['external.conceal-wrap'] = {},
 			},
 		}
 	end,
